@@ -1,23 +1,130 @@
 {
-	"groups":[
-	{
-		"keys":"bg_jpg,egret_icon_png,description_json",
-		"name":"preload"
-	}],
-	"resources":[
-	{
-		"name":"bg_jpg",
-		"type":"image",
-		"url":"assets/bg.jpg"
-	},
-	{
-		"name":"egret_icon_png",
-		"type":"image",
-		"url":"assets/egret_icon.png"
-	},
-	{
-		"name":"description_json",
-		"type":"json",
-		"url":"config/description.json"
-	}]
+	"resources": [
+		{
+			"name": "bgImage",
+			"type": "image",
+			"url": "assets/bg.jpg"
+		},
+		{
+			"name": "egretIcon",
+			"type": "image",
+			"url": "assets/egret_icon.png"
+		},
+		{
+			"name": "description",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "10000_png",
+			"type": "image",
+			"url": "assets/待机/10000.png"
+		},
+		{
+			"name": "10001_png",
+			"type": "image",
+			"url": "assets/待机/10001.png"
+		},
+		{
+			"name": "10002_png",
+			"type": "image",
+			"url": "assets/待机/10002.png"
+		},
+		{
+			"name": "10003_png",
+			"type": "image",
+			"url": "assets/待机/10003.png"
+		},
+		{
+			"name": "10004_png",
+			"type": "image",
+			"url": "assets/待机/10004.png"
+		},
+		{
+			"name": "100012_png",
+			"type": "image",
+			"url": "assets/跑步/100012.png"
+		},
+		{
+			"name": "100022_png",
+			"type": "image",
+			"url": "assets/跑步/100022.png"
+		},
+		{
+			"name": "100032_png",
+			"type": "image",
+			"url": "assets/跑步/100032.png"
+		},
+		{
+			"name": "100042_png",
+			"type": "image",
+			"url": "assets/跑步/100042.png"
+		},
+		{
+			"name": "100052_png",
+			"type": "image",
+			"url": "assets/跑步/100052.png"
+		},
+		{
+			"name": "100062_png",
+			"type": "image",
+			"url": "assets/跑步/100062.png"
+		},
+		{
+			"name": "100072_png",
+			"type": "image",
+			"url": "assets/跑步/100072.png"
+		},
+		{
+			"name": "100082_png",
+			"type": "image",
+			"url": "assets/跑步/100082.png"
+		},
+		{
+			"name": "100092_png",
+			"type": "image",
+			"url": "assets/跑步/100092.png"
+		},
+		{
+			"name": "1000102_png",
+			"type": "image",
+			"url": "assets/跑步/1000102.png"
+		},
+		{
+			"name": "1000112_png",
+			"type": "image",
+			"url": "assets/跑步/1000112.png"
+		},
+		{
+			"name": "100002_png",
+			"type": "image",
+			"url": "assets/跑步/100002.png"
+		},
+		{
+			"name": "BG2_png",
+			"type": "image",
+			"url": "assets/BG2.png"
+		},
+		{
+			"name": "10005_png",
+			"type": "image",
+			"url": "assets/待机/10005.png"
+		},
+		{
+			"name": "10006_png",
+			"type": "image",
+			"url": "assets/待机/10006.png"
+		},
+		{
+			"name": "10007_png",
+			"type": "image",
+			"url": "assets/待机/10007.png"
+		}
+	],
+	"groups": [
+		{
+			"name": "preload",
+			"keys": "bgImage,egretIcon,10000_png,10001_png,10002_png,10003_png,10004_png,100012_png,100022_png,100032_png,100042_png,100052_png,100062_png,100072_png,100082_png,100092_png,1000102_png,1000112_png,100002_png,BG2_png,10005_png,10006_png,10007_png"
+		}
+	]
 }

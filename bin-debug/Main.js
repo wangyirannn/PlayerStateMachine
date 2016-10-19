@@ -25,7 +25,192 @@
 //  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////、
+var Pole = (function (_super) {
+    __extends(Pole, _super);
+    function Pole() {
+        _super.call(this);
+        this.MySta = new StaMac;
+        this.MoveSpeed = 20;
+        this.ChaTime = 150;
+        this.Modle = 0;
+        this.IdleAni = new Array();
+        this.MoveAni = new Array();
+        this.MyPhoto = this.createBitmapByName("10000_png");
+        this.addChild(this.MyPhoto);
+        this.LoadAni();
+        this.anchorOffsetX = this.MyPhoto.width / 2;
+        this.anchorOffsetY = this.MyPhoto.height / 2;
+    }
+    var d = __define,c=Pole,p=c.prototype;
+    p.LoadAni = function () {
+        var texture = RES.getRes("10000_png");
+        this.IdleAni.push(texture);
+        texture = RES.getRes("10001_png");
+        this.IdleAni.push(texture);
+        texture = RES.getRes("10002_png");
+        this.IdleAni.push(texture);
+        texture = RES.getRes("10003_png");
+        this.IdleAni.push(texture);
+        texture = RES.getRes("10004_png");
+        this.IdleAni.push(texture);
+        texture = RES.getRes("10005_png");
+        this.IdleAni.push(texture);
+        texture = RES.getRes("10006_png");
+        this.IdleAni.push(texture);
+        texture = RES.getRes("10007_png");
+        this.IdleAni.push(texture);
+        texture = RES.getRes("100002_png");
+        this.MoveAni.push(texture);
+        texture = RES.getRes("100012_png");
+        this.MoveAni.push(texture);
+        texture = RES.getRes("100022_png");
+        this.MoveAni.push(texture);
+        texture = RES.getRes("100032_png");
+        this.MoveAni.push(texture);
+        texture = RES.getRes("100042_png");
+        this.MoveAni.push(texture);
+        texture = RES.getRes("100052_png");
+        this.MoveAni.push(texture);
+        texture = RES.getRes("100062_png");
+        this.MoveAni.push(texture);
+        texture = RES.getRes("100072_png");
+        this.MoveAni.push(texture);
+    };
+    p.PlayAni = function (Ani) {
+        var count = 0;
+        var Bit = this.MyPhoto;
+        var M = this.Modle;
+        console.log("M:" + M);
+        var timer = new egret.Timer(125, 0);
+        timer.addEventListener(egret.TimerEvent.TIMER, Play, this);
+        timer.start();
+        function Play() {
+            Bit.texture = Ani[count];
+            if (count < Ani.length - 1) {
+                //   console.log(Ani.length+" "+count);
+                count++;
+            }
+            else {
+                count = 0;
+            }
+            if (this.Modle != M) {
+                console.log("tM:" + M + " nowM:" + this.Modle);
+                timer.stop();
+            }
+        }
+        /* 帧动画一代目
+        PlayAni1();
+        var timer:egret.Timernew egret.Timer(100, time);
+            egret.Tween.get(Bit).wait(150).call(PlayAni2);
+        }
+        function PlayAni2(){
+            Bit.texture=Ani[count];
+            if(count<Ani.length-1){console.log(Ani.length+" "+count); count++;}
+            else{count=0;}
+            PlayAni1();
+       }
+       */
+    };
+    p.Move = function (x, y) {
+        var MS = new MoveSta(x, y, this);
+        this.MySta.Reload(MS);
+    };
+    p.Idle = function () {
+        var IS = new IdleSta(this);
+        this.MySta.Reload(IS);
+    };
+    /**
+         * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
+         * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
+         */
+    p.createBitmapByName = function (name) {
+        var result = new egret.Bitmap();
+        var texture = RES.getRes(name);
+        result.texture = texture;
+        return result;
+    };
+    return Pole;
+}(egret.DisplayObjectContainer));
+egret.registerClass(Pole,'Pole');
+var MoveSta = (function () {
+    function MoveSta(x, y, Player) {
+        this.Ty = y;
+        this.Tx = x;
+        this.Player = Player;
+    }
+    var d = __define,c=MoveSta,p=c.prototype;
+    p.Load = function () {
+        var _this = this;
+        this.Player.Modle++;
+        var xx = this.Tx - this.Player.x;
+        var yy = this.Ty - this.Player.y;
+        if (xx > 0) {
+            this.Player.scaleX = 1;
+        }
+        else {
+            this.Player.scaleX = -1;
+        }
+        var zz = Math.pow(xx * xx + yy * yy, 0.5);
+        //   console.log(xx+" "+yy);
+        var time = zz / this.Player.MoveSpeed;
+        this.timer = new egret.Timer(50, time);
+        this.LeastTime = time;
+        //   console.log("time:"+time);
+        this.timer.addEventListener(egret.TimerEvent.TIMER, function () {
+            _this.Player.x += xx / time;
+            _this.Player.y += yy / time;
+            _this.LeastTime--;
+            if (_this.LeastTime < 1) {
+                _this.timer.stop();
+                //        this.Player.Modle=-1;
+                //         console.log("1");
+                if (_this.LeastTime > -10) {
+                    _this.Player.Idle();
+                } //意味着是走停不是逼停
+            }
+        }, this);
+        this.timer.start();
+        this.Player.PlayAni(this.Player.MoveAni);
+        //     console.log("kaishiM");
+    };
+    p.exit = function () {
+        this.LeastTime = -10;
+        //       console.log("exitM");
+    };
+    return MoveSta;
+}());
+egret.registerClass(MoveSta,'MoveSta',["Sta"]);
+var IdleSta = (function () {
+    function IdleSta(Player) {
+        this.Player = Player;
+    }
+    var d = __define,c=IdleSta,p=c.prototype;
+    p.Load = function () {
+        //      console.log("Loadidle");
+        this.Player.Modle = 0;
+        this.Player.PlayAni(this.Player.IdleAni);
+    };
+    p.exit = function () {
+        //  console.log("exitIdle");
+    };
+    return IdleSta;
+}());
+egret.registerClass(IdleSta,'IdleSta',["Sta"]);
+var StaMac = (function () {
+    function StaMac() {
+    }
+    var d = __define,c=StaMac,p=c.prototype;
+    p.Reload = function (S) {
+        if (this.nowSta) {
+            this.nowSta.exit();
+        }
+        this.nowSta = S;
+        this.nowSta.Load();
+    };
+    return StaMac;
+}());
+egret.registerClass(StaMac,'StaMac');
 var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
@@ -101,52 +286,39 @@ var Main = (function (_super) {
      * Create a game scene
      */
     p.createGameScene = function () {
-        var sky = this.createBitmapByName("bg_jpg");
+        var sky = this.createBitmapByName("BG2_png");
         this.addChild(sky);
         var stageW = this.stage.stageWidth;
         var stageH = this.stage.stageHeight;
         sky.width = stageW;
         sky.height = stageH;
-        var topMask = new egret.Shape();
-        topMask.graphics.beginFill(0x000000, 0.5);
-        topMask.graphics.drawRect(0, 0, stageW, 172);
-        topMask.graphics.endFill();
-        topMask.y = 33;
-        this.addChild(topMask);
-        var icon = this.createBitmapByName("egret_icon_png");
-        this.addChild(icon);
-        icon.x = 26;
-        icon.y = 33;
-        var line = new egret.Shape();
-        line.graphics.lineStyle(2, 0xffffff);
-        line.graphics.moveTo(0, 0);
-        line.graphics.lineTo(0, 117);
-        line.graphics.endFill();
-        line.x = 172;
-        line.y = 61;
-        this.addChild(line);
-        var colorLabel = new egret.TextField();
-        colorLabel.textColor = 0xffffff;
-        colorLabel.width = stageW - 172;
-        colorLabel.textAlign = "center";
-        colorLabel.text = "Hello Egret";
-        colorLabel.size = 24;
-        colorLabel.x = 172;
-        colorLabel.y = 80;
-        this.addChild(colorLabel);
-        var textfield = new egret.TextField();
-        this.addChild(textfield);
-        textfield.alpha = 0;
-        textfield.width = stageW - 172;
-        textfield.textAlign = egret.HorizontalAlign.CENTER;
-        textfield.size = 24;
-        textfield.textColor = 0xffffff;
-        textfield.x = 172;
-        textfield.y = 135;
-        this.textfield = textfield;
-        //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
-        // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        RES.getResAsync("description_json", this.startAnimation, this);
+        this.Player = new Pole();
+        this.addChild(this.Player);
+        this.Player.x = this.Player.y = 300;
+        this.Player.Idle();
+        this.touchEnabled = true;
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.Moveba, this);
+        /*
+        
+                var textfield = new egret.TextField();
+                this.addChild(textfield);
+                textfield.alpha = 0;
+                textfield.width = stageW - 172;
+                textfield.textAlign = egret.HorizontalAlign.CENTER;
+                textfield.size = 24;
+                textfield.textColor = 0xffffff;
+                textfield.x = 172;
+                textfield.y = 135;
+                this.textfield = textfield;
+        
+                //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
+                // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
+                RES.getResAsync("description", this.startAnimation, this)
+        */
+    };
+    p.Moveba = function (evt) {
+        this.Player.Move(evt.stageX, evt.stageY);
+        //   console.log(evt.stageX+" "+evt.stageY);
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -196,3 +368,4 @@ var Main = (function (_super) {
     return Main;
 }(egret.DisplayObjectContainer));
 egret.registerClass(Main,'Main');
+//# sourceMappingURL=Main.js.map

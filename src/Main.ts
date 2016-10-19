@@ -77,6 +77,14 @@ class Pole extends egret.DisplayObjectContainer {
          this.MoveAni.push(texture);
          texture = RES.getRes("100072_png");
          this.MoveAni.push(texture);
+         texture = RES.getRes("100082_png");
+         this.MoveAni.push(texture);
+         texture = RES.getRes("100092_png");
+         this.MoveAni.push(texture);
+         texture = RES.getRes("1000102_png");
+         this.MoveAni.push(texture);
+         texture = RES.getRes("1000112_png");
+         this.MoveAni.push(texture);
     }
     
     public PlayAni(Ani:Array<egret.Texture>){
@@ -333,6 +341,7 @@ class Main extends egret.DisplayObjectContainer {
         this.touchEnabled=true;
         this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.Moveba,this);
 /*
+
         var textfield = new egret.TextField();
         this.addChild(textfield);
         textfield.alpha = 0;
@@ -343,6 +352,7 @@ class Main extends egret.DisplayObjectContainer {
         textfield.x = 172;
         textfield.y = 135;
         this.textfield = textfield;
+
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
         RES.getResAsync("description", this.startAnimation, this)
@@ -413,3 +423,5 @@ class Main extends egret.DisplayObjectContainer {
         textfield.textFlow = textFlow;
     }
 }
+
+
